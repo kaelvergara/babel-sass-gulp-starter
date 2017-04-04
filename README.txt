@@ -1,4 +1,5 @@
-Animated Rxjs introduction
+Babel, Sass, Gulp & Starter
 
-gulp
-babel
+Babel to transpile es6 (im a fan of destructuring)
+Sass for css
+Gulp for build
