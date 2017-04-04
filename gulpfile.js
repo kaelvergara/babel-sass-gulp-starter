@@ -6,7 +6,6 @@ var babel = require('gulp-babel');
 var eslint = require('gulp-eslint');
 var eslintRc = require('./eslintrc');
 
-
 var runSequence = require('run-sequence');
 
 gulp.task('build-html', function() {
@@ -42,6 +41,15 @@ gulp.task('clean', function () {
             'node_modules'
         ], {read: false})
         .pipe(clean());
+});
+
+gulp.task('watch', function () {
+    gulp.watch([
+        'src/js/**/*.js',
+        'src/scss/**/*.scss'
+    ], function() {
+        runSequence('lint', 'build-js', 'build-css');
+    });
 });
 
 gulp.task('default', function(callback) {

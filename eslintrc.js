@@ -301,14 +301,5 @@ module.exports = {
         "symbol-description": "off",                  //  require symbol descriptions
         "template-curly-spacing": "error",            //  require or disallow spacing around embedded expressions of template strings
         "yield-star-spacing": "off",                  //  require or disallow spacing around theÂ *Â inÂ yield*Â expressions
-
-        /**
-         * Filename Rules
-         *
-         * https://github.com/selaux/eslint-plugin-filenames
-         *
-         * Not overly strict, but ensure you're always lower case, and kebab.
-         */
-        "filenames/match-regex": ["error", "^[a-z0-9_-]+$"]
     }
 };
