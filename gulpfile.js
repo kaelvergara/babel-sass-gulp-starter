@@ -13,6 +13,11 @@ gulp.task('build-html', function() {
     .pipe(gulp.dest('dist/'));
 });
 
+gulp.task('copy-assets', function() {
+  return gulp.src('src/assets/**/*')
+    .pipe(gulp.dest('dist/assets'));
+});
+
 gulp.task('lint', function() {
   return gulp.src('src/js/**/*.js').pipe(eslint({
     'rules': eslintRc.rules
@@ -53,5 +58,5 @@ gulp.task('watch', function () {
 });
 
 gulp.task('default', function(callback) {
-  runSequence('lint', 'build-html', 'build-css', 'build-js', callback);
+  runSequence('lint', 'build-html', 'copy-assets', 'build-css', 'build-js', callback);
 });
