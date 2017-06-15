@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Sample project",
   "scripts": {
-     "gulp": "gulp"
+    "gulp": "gulp"
   },
   "dependencies": {
     "babel-cli": "^6.24.0",
@@ -21,9 +21,12 @@
     "gulp-clean": "^0.3.2",
     "gulp-eslint": "^3.0.1",
     "gulp-sass": "^3.1.0",
+    "gulp-stylelint": "^3.9.0",
     "gulp-util": "^3.0.8",
     "load-grunt-tasks": "^3.5.2",
-    "run-sequence": "^1.2.2"
+    "run-sequence": "^1.2.2",
+    "stylelint-config-standard": "^16.0.0",
+    "stylelint-processor-html": "^1.0.0"
   },
   "author": "Nikael Vergara",
   "license": "ISC"

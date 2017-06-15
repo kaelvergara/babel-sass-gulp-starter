@@ -5,6 +5,7 @@ var sass  = require('gulp-sass');
 var babel = require('gulp-babel');
 var eslint = require('gulp-eslint');
 var eslintRc = require('./eslintrc');
+var stylelint = require('gulp-stylelint');
 
 var runSequence = require('run-sequence');
 
@@ -28,6 +29,11 @@ gulp.task('lint', function() {
 
 gulp.task('build-css', function() {
   return gulp.src('src/scss/**/*.scss')
+    .pipe(stylelint({
+        reporters: [
+            {formatter: 'string', console: true}
+        ]
+    }))
     .pipe(sass())
     .pipe(gulp.dest('dist/css/'));
 });
