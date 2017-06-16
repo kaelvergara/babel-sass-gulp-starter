@@ -7,6 +7,8 @@ var eslint = require('gulp-eslint');
 var eslintRc = require('./eslintrc');
 var stylelint = require('gulp-stylelint');
 
+var browserSync = require('browser-sync').create();
+
 var runSequence = require('run-sequence');
 
 gulp.task('build-html', function() {
@@ -35,15 +37,36 @@ gulp.task('build-css', function() {
         ]
     }))
     .pipe(sass())
-    .pipe(gulp.dest('dist/css/'));
+    .pipe(gulp.dest('dist/css/'))
+    .pipe(browserSync.stream());
 });
 
 gulp.task('build-js', () => {
-    return gulp.src('src/js/**/*.js')
-        .pipe(babel({
-            presets: ['es2015']
-        }))
-        .pipe(gulp.dest('dist/js'));
+  return gulp.src('src/js/**/*.js')
+    .pipe(babel({
+        presets: ['es2015']
+    }))
+    .pipe(gulp.dest('dist/js'))
+    .pipe(browserSync.stream());
+});
+
+gulp.task('start', ['build', 'browser-sync'], function () {
+    gulp.watch("src/html/**/*.html", ['build-html']).on('change', browserSync.reload);
+
+    gulp.watch('src/scss/**/*.scss', ['build-css']);
+    gulp.watch('src/js/**/*.js', ['build-js']);
+});
+
+gulp.task('browser-sync', function() {
+  browserSync.init({
+    server: {
+      baseDir: 'dist'
+    },
+  })
+})
+
+gulp.task('build', function(callback) {
+  runSequence('lint', 'build-html', 'copy-assets', 'build-css', 'build-js', callback);
 });
 
 gulp.task('clean', function () {
@@ -54,15 +77,4 @@ gulp.task('clean', function () {
         .pipe(clean());
 });
 
-gulp.task('watch', function () {
-    gulp.watch([
-        'src/js/**/*.js',
-        'src/scss/**/*.scss'
-    ], function() {
-        runSequence('lint', 'build-js', 'build-css');
-    });
-});
-
-gulp.task('default', function(callback) {
-  runSequence('lint', 'build-html', 'copy-assets', 'build-css', 'build-js', callback);
-});
+gulp.task('default', ['start'])
