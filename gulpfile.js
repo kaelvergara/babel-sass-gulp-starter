@@ -1,23 +1,12 @@
-var gulp  = require('gulp');
-var gutil = require('gulp-util');
-var clean = require('gulp-clean');
-var sass  = require('gulp-sass');
-var babel = require('gulp-babel');
-var eslint = require('gulp-eslint');
-var eslintRc = require('./eslintrc');
-var stylelint = require('gulp-stylelint');
-
+var gulp        = require('gulp');
+var gutil       = require('gulp-util');
+var clean       = require('gulp-clean');
+var sass        = require('gulp-sass');
+var babel       = require('gulp-babel');
+var eslint      = require('gulp-eslint');
+var eslintRc    = require('./eslintrc');
+var stylelint   = require('gulp-stylelint');
 var browserSync = require('browser-sync').create();
-
-gulp.task('build-html', function() {
-  return gulp.src('src/html/**/*.html')
-    .pipe(gulp.dest('dist/'));
-});
-
-gulp.task('copy-assets', function() {
-  return gulp.src('src/assets/**/*')
-    .pipe(gulp.dest('dist/assets'));
-});
 
 gulp.task('lint', function() {
   return gulp.src('src/js/**/*.js').pipe(eslint({
@@ -25,6 +14,16 @@ gulp.task('lint', function() {
   }))
   .pipe(eslint.format())
   .pipe(eslint.failOnError());
+});
+
+gulp.task('copy-assets', function() {
+  return gulp.src('src/assets/**/*')
+    .pipe(gulp.dest('dist/assets'));
+});
+
+gulp.task('build-html', function() {
+  return gulp.src('src/html/**/*.html')
+    .pipe(gulp.dest('dist/'));
 });
 
 gulp.task('build-css', function() {
@@ -49,10 +48,10 @@ gulp.task('build-js', () => {
 });
 
 gulp.task('start', ['build', 'browser-sync'], function () {
-    gulp.watch("src/html/**/*.html", ['build-html']).on('change', browserSync.reload);
+  gulp.watch("src/html/**/*.html", ['build-html']).on('change', browserSync.reload);
 
-    gulp.watch('src/scss/**/*.scss', ['build-css']);
-    gulp.watch('src/js/**/*.js', ['build-js']);
+  gulp.watch('src/scss/**/*.scss', ['build-css']);
+  gulp.watch('src/js/**/*.js', ['build-js']);
 });
 
 gulp.task('browser-sync', function() {
@@ -63,14 +62,11 @@ gulp.task('browser-sync', function() {
   })
 })
 
-gulp.task('build', ['lint', 'build-html', 'copy-assets', 'build-css', 'build-js']);
+gulp.task('build', ['lint', 'copy-assets', 'build-html', 'build-css', 'build-js']);
 
 gulp.task('clean', function () {
-    return gulp.src([
-            'dist',
-            'node_modules'
-        ], {read: false})
-        .pipe(clean());
+  return gulp.src(['dist', 'node_modules'], {read: false})
+    .pipe(clean());
 });
 
 gulp.task('default', ['start'])
