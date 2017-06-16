@@ -4,10 +4,10 @@
   "description": "Sample project",
   "scripts": {
     "gulp": "gulp",
-    "npm build": "gulp build",
-    "npm start": "gulp start",
-    "npm clean": "gulp clean",
-    "npm purge": "gulp purge"
+    "build": "gulp build",
+    "start": "gulp start",
+    "clean": "gulp clean",
+    "purge": "gulp purge"
   },
   "dependencies": {
     "babel-cli": "^6.24.0",
