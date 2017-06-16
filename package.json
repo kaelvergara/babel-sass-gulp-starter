@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "Sample project",
   "scripts": {
-    "gulp": "gulp"
+    "gulp": "gulp",
+    "npm build": "gulp build",
+    "npm start": "gulp start",
+    "npm clean": "gulp clean",
+    "npm purge": "gulp purge"
   },
   "dependencies": {
     "babel-cli": "^6.24.0",
