@@ -9,8 +9,6 @@ var stylelint = require('gulp-stylelint');
 
 var browserSync = require('browser-sync').create();
 
-var runSequence = require('run-sequence');
-
 gulp.task('build-html', function() {
   return gulp.src('src/html/**/*.html')
     .pipe(gulp.dest('dist/'));
@@ -65,9 +63,7 @@ gulp.task('browser-sync', function() {
   })
 })
 
-gulp.task('build', function(callback) {
-  runSequence('lint', 'build-html', 'copy-assets', 'build-css', 'build-js', callback);
-});
+gulp.task('build', ['lint', 'build-html', 'copy-assets', 'build-css', 'build-js']);
 
 gulp.task('clean', function () {
     return gulp.src([
