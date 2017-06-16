@@ -13,7 +13,6 @@ gulp.task('lint', function() {
     'rules': eslintRc.rules
   }))
   .pipe(eslint.format())
-  .pipe(eslint.failOnError());
 });
 
 gulp.task('copy-assets', function() {
@@ -29,9 +28,8 @@ gulp.task('build-html', function() {
 gulp.task('build-css', function() {
   return gulp.src('src/scss/**/*.scss')
     .pipe(stylelint({
-        reporters: [
-            {formatter: 'string', console: true}
-        ]
+        failAfterError: false,
+        reporters: [{formatter: 'string', console: true}]
     }))
     .pipe(sass())
     .pipe(gulp.dest('dist/css/'))
@@ -53,7 +51,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('purge', ['clean'], function () {
-  return gulp.src('node_modules'], {read: false})
+  return gulp.src('node_modules', {read: false})
     .pipe(clean());
 });
 
@@ -61,14 +59,14 @@ gulp.task('browser-sync', function() {
   browserSync.init({
     server: {
       baseDir: 'dist'
-    },
-  })
+    }
+  });
 })
 
 gulp.task('start', ['build', 'browser-sync'], function () {
   gulp.watch("src/html/**/*.html", ['build-html']).on('change', browserSync.reload);
   gulp.watch('src/scss/**/*.scss', ['build-css']);
-  gulp.watch('src/js/**/*.js', ['build-js']);
+  gulp.watch('src/js/**/*.js', ['lint', 'build-js']);
 });
 
 gulp.task('build', ['lint', 'copy-assets', 'build-html', 'build-css', 'build-js']);
